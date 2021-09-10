@@ -200,6 +200,21 @@ export const constantRoutes = [
                 meta: { title:'我的订单' }
             },
             {
+                path: 'previewOrder',
+                name: 'PreviewOrder',
+                hidden:true,
+                component: ()=> import('@/views/afterSales/myOrder/previewOrder.vue'),
+                meta: { title:'查看订单',
+                    breadcrumb:false
+                }
+            },
+            {
+                path: 'distribution',
+                name: 'Distribution',
+                component: ()=> import('@/views/afterSales/distribution'),
+                meta: { title:'配送列表'}
+            },
+            {
                 path: 'refundList',
                 name: 'RefundList',
                 component: ()=> import('@/views/afterSales/refundList'),
@@ -210,7 +225,7 @@ export const constantRoutes = [
                 name: 'EditRefundList',
                 hidden:true,
                 component: ()=> import('@/views/afterSales/refundList/edit.vue'),
-                meta: { title:'编辑售后' }
+                meta: { title:'编辑售后'}
             }
         ]
     },
@@ -228,7 +243,7 @@ export const constantRoutes = [
             name: 'OrderDetail',
             hidden:true,
             component:() => import('@/views/afterSales/orderList/detail.vue'),
-            meta: {title:'详情',noCache:true,activeMenu:'/orderList/orderList'}
+            meta: {title:'详情',noCache:true,activeMenu:'/orderList/orderList',breadcrumb:true }
         }]
     },
 
@@ -241,6 +256,35 @@ const createRouter = () => new Router({
     scrollBehavior: () => ({ y: 0 }),
     routes: constantRoutes
 })
+
+export const asyncRouterMap = [
+    {
+        path: '/example',
+        component: Layout,
+        redirect: '/example/table',
+        name: 'Example',
+        meta: { title: 'Example', icon: 'el-icon-s-help' },
+        children: [
+            {
+                path: 'table',
+                name: 'Table',
+                component: () => import('@/views/table/index'),
+                meta: { title: 'Table', icon: 'table' }
+            },
+            {
+                path: 'tree',
+                name: 'Tree',
+                component: () => import('@/views/tree/index'),
+                meta: { title: 'Tree', icon: 'tree' }
+            }
+        ]
+    },
+    {
+        path: '/404',
+        component: () => import('@/views/404'),
+        hidden: true
+    },
+]
 
 const router = createRouter()
 

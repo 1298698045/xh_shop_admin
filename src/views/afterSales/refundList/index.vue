@@ -1,45 +1,43 @@
 <template>
     <div class="wrapper">
-        <el-card>
-            <el-form ref="formSeach" class="formSeach" :model="formSeach" label-width="80px">
-                <el-form-item class="formItem" prop="orderCode" label="商品ID">
-                    <el-input class="inp" size="mini" clearable v-model="formSeach.orderCode"></el-input>
-                </el-form-item>
-                <el-form-item class="formItem" prop="startTime" label="开始日期">
-                    <el-date-picker
-                        size="mini"
-                        class="inp"
-                        v-model="formSeach.startTime"
-                        type="date"
-                        placeholder="选择开始日期">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item class="formItem" prop="endTime" label="结束日期">
-                    <el-date-picker
-                        size="mini"
-                        class="inp"
-                        v-model="formSeach.endTime"
-                        type="date"
-                        placeholder="选择结束日期">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item class="formItem" prop="paymentStatus" label="退货状态">
-                    <el-select clear="inp" size="mini" v-model="formSeach.paymentStatus" placeholder="请选择付款状态">
-                        <el-option label="全部" value="shanghai"></el-option>
-                        <el-option label="等待" value="beijing"></el-option>
-                        <el-option label="已收到" value="beijing"></el-option>
-                        <el-option label="退货授权" value="beijing"></el-option>
-                        <el-option label="货物已更换" value="beijing"></el-option>
-                        <el-option label="货物已退款" value="beijing"></el-option>
-                        <el-option label="拒绝请求" value="beijing"></el-option>
-                        <el-option label="已取消" value="beijing"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" size="mini" @click.native="handleQuery('formSeach')">查询</el-button>
-                </el-form-item>
-            </el-form>
-        </el-card>
+        <el-form ref="formSeach" class="formSeach" :model="formSeach" label-width="80px">
+            <el-form-item class="formItem" prop="shopId" label="商品ID">
+                <el-input class="inp" size="mini" clearable v-model="formSeach.shopId"></el-input>
+            </el-form-item>
+            <el-form-item class="formItem" prop="startTime" label="开始日期">
+                <el-date-picker
+                    size="mini"
+                    class="inp"
+                    v-model="formSeach.startTime"
+                    type="date"
+                    placeholder="选择开始日期">
+                </el-date-picker>
+            </el-form-item>
+            <el-form-item class="formItem" prop="endTime" label="结束日期">
+                <el-date-picker
+                    size="mini"
+                    class="inp"
+                    v-model="formSeach.endTime"
+                    type="date"
+                    placeholder="选择结束日期">
+                </el-date-picker>
+            </el-form-item>
+            <el-form-item class="formItem" prop="refundStatus" label="退货状态">
+                <el-select clear="inp" size="mini" v-model="formSeach.refundStatus" placeholder="请选择付款状态">
+                    <el-option label="全部" value="shanghai"></el-option>
+                    <el-option label="等待" value="beijing"></el-option>
+                    <el-option label="已收到" value="beijing"></el-option>
+                    <el-option label="退货授权" value="beijing"></el-option>
+                    <el-option label="货物已更换" value="beijing"></el-option>
+                    <el-option label="货物已退款" value="beijing"></el-option>
+                    <el-option label="拒绝请求" value="beijing"></el-option>
+                    <el-option label="已取消" value="beijing"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" size="mini" @click.native="handleQuery('formSeach')">查询</el-button>
+            </el-form-item>
+        </el-form>
         <div class="center" :style="{'height':publicContHeight+'px'}">
             <el-table
                 :data="tableData"
@@ -94,6 +92,69 @@
                 </el-table-column>
             </el-table>
         </div>
+        <el-dialog
+            title="编辑退货"
+            :visible.sync="editDialog"
+            width="30%"
+            class="modal"
+            :before-close="handleClose">
+            <div class="modalContent">
+                <el-form class="editForm" ref="editForm" :rules="editFormRules" :model="editForm" label-width="100px">
+                    <div class="infoRow">
+                        <span class="label">商品ID</span>
+                        <span class="val">4730720210910085709</span>
+                    </div>
+                    <div class="infoRow">
+                        <span class="label">订单ID</span>
+                        <span class="val">868411720210910085645</span>
+                    </div>
+                    <div class="infoRow">
+                        <span class="label">客户</span>
+                        <span class="val">匿名用户</span>
+                    </div>
+                    <div class="infoRow">
+                        <span class="label">商品</span>
+                        <span class="val">百年LOGO单枚装（锌合金平头扣）</span>
+                    </div>
+                    <el-form-item class="infoRow" prop="number" label="数量">
+                        <el-input type="number" v-model="editForm.number" size="mini" clearable placeholder="请输入内容"></el-input>
+                    </el-form-item>
+                    <el-form-item class="infoRow" prop="refundStatus" label="退货请求状态">
+                        <el-select clear="inp" size="mini" v-model="editForm.refundStatus" placeholder="请选择付款状态">
+                            <el-option label="全部" value="shanghai"></el-option>
+                            <el-option label="等待" value="beijing"></el-option>
+                            <el-option label="已收到" value="beijing"></el-option>
+                            <el-option label="退货授权" value="beijing"></el-option>
+                            <el-option label="货物已更换" value="beijing"></el-option>
+                            <el-option label="货物已退款" value="beijing"></el-option>
+                            <el-option label="拒绝请求" value="beijing"></el-option>
+                            <el-option label="已取消" value="beijing"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item class="infoRow" prop="reason" label="退货原因">
+                        <el-input type="text" v-model="editForm.reason" size="mini" clearable placeholder="请输入内容"></el-input>
+                    </el-form-item>
+                    <el-form-item class="infoRow" prop="operation" label="退货操作">
+                        <el-input type="text" v-model="editForm.operation" size="mini" clearable placeholder="请输入内容"></el-input>
+                    </el-form-item>
+                    <el-form-item class="infoRow explain" prop="explain" label="退货说明">
+                        <el-input type="textarea" v-model="editForm.explain" size="mini" clearable placeholder="请输入内容"></el-input>
+                    </el-form-item>
+                    <el-form-item class="infoRow" prop="workingExplain" label="工作人员说明">
+                        <el-input type="textarea" v-model="editForm.workingExplain" size="mini" clearable placeholder="请输入内容"></el-input>
+                    </el-form-item>
+                    <div class="infoRow">
+                        <span class="label">日期</span>
+                        <span class="val">2021/9/10 16:57:09</span>
+                    </div>
+                </el-form>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click.native="handleClose('editForm')">取 消</el-button>
+                <el-button type="primary" @click="getEditSubmit('editForm')">确 定</el-button>
+            </span>
+        </el-dialog>
+
     </div>
 </template>
 <script>
@@ -103,19 +164,10 @@ export default {
     data(){
         return {
             formSeach:{
-                orderCode:"", // 订单编号
+                shopId:"", // 商品ID
                 startTime:"", // 开始日期
                 endTime:"", // 结束日期
-                phone:"", // 手机号
-                email:"", // 邮箱
-                paymentStatus:"", // 付款状态
-                isSelfmention:"", // 是否自提
-                shopName:"", // 商品名称
-                consigneeName:"", // 收货人姓名
-                orderStatus:"", // 订单状态
-                distributionStatus:"", // 配送状态
-                selfmentionAddress:"", // 自提地址
-                pickUpCode:"" // 取货码
+                refundStatus:0 // 退货状态
             },
             tableData: [
                 {
@@ -145,7 +197,54 @@ export default {
                     refundStatus: 0,
                     date: "2021-09-08 12:00:00"
                 }
-            ]
+            ],
+            editDialog:false,
+            options:[
+                {
+                    label:"等待",
+                    value:"等待"
+                },
+                {
+                    label:"已收到",
+                    value:"已收到"
+                },
+                {
+                    label:"退货授权",
+                    value:"退货授权"
+                },
+                {
+                    label:"货物已更换",
+                    value:"货物已更换"
+                },
+                {
+                    label:"货物已退款",
+                    value:"货物已退款"
+                },
+                {
+                    label:"拒绝请求",
+                    value:"拒绝请求"
+                },
+                {
+                    label:"已取消",
+                    value:"已取消"
+                }
+            ],
+            editForm:{
+                number:"",
+                refundStatus:"",
+                reason:"",
+                operation:"",
+                explain:"",
+                workingExplain:""
+            },
+            editFormRules: {
+                reason:[
+                    { required: true, message: '请输入退货原因', trigger: 'blur' }
+                ],
+                operation:[
+                    { required: true, message: '请输入退货操作', trigger: 'blur' }
+                ],
+            }
         }
     },
     methods:{
@@ -153,8 +252,23 @@ export default {
             return ['等待','已收到','同意','拒绝'][status]
         },
         handleEdit(){
-            this.$router.push({
-                name:'EditRefundList'
+            this.editDialog = true;
+            // this.$router.push({
+            //     name:'EditRefundList'
+            // })
+        },
+        handleClose(formName="editForm"){
+            this.$refs.editForm.resetFields();
+            this.editDialog = false;
+        },
+        getEditSubmit(formName){
+            this.$refs[formName].validate((validate)=>{
+                console.log(validate);
+                if(validate){
+                    this.editDialog = false;
+                }else {
+
+                }
             })
         }
     }
@@ -182,5 +296,26 @@ export default {
     }
     .center{
         overflow-y: auto;
+    }
+    .modalContent{
+        height: 500px;
+        overflow-y: auto;
+    }
+    .modalContent .editForm .infoRow .label{
+        display: inline-block;
+        width: 100px;
+        text-align: right;
+        padding: 0 12px 0 0;
+        color: #606266;
+        line-height: 40px;
+        font-size: 14px;
+        box-sizing: border-box;
+        font-weight: 700;
+    }
+    .modalContent .editForm .el-form-item{
+        margin-bottom: 10px;
+    }
+    .explain{
+        margin-top: 20px;
     }
 </style>
