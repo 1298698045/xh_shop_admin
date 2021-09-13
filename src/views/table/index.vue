@@ -30,7 +30,9 @@
       </el-table-column>
       <el-table-column class-name="status-col" label="Status" width="110" align="center">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
+          <el-tag :type="scope.row.status | statusFilter">
+            {{ scope.row.status }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="Display_time" width="200">
@@ -47,33 +49,33 @@
 import { getList } from '@/api/table'
 
 export default {
-    filters: {
-        statusFilter(status) {
-            const statusMap = {
-                published: 'success',
-                draft: 'gray',
-                deleted: 'danger'
-            }
-            return statusMap[status]
-        }
-    },
-    data() {
-        return {
-            list: null,
-            listLoading: true
-        }
-    },
-    created() {
-        this.fetchData()
-    },
-    methods: {
-        fetchData() {
-            this.listLoading = true
-            getList().then(response => {
-                this.list = response.data.items
-                this.listLoading = false
-            })
-        }
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        published: 'success',
+        draft: 'gray',
+        deleted: 'danger'
+      }
+      return statusMap[status]
     }
+  },
+  data() {
+    return {
+      list: null,
+      listLoading: true
+    }
+  },
+  created() {
+    this.fetchData()
+  },
+  methods: {
+    fetchData() {
+      this.listLoading = true
+      getList().then(response => {
+        this.list = response.data.items
+        this.listLoading = false
+      })
+    }
+  }
 }
 </script>

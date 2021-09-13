@@ -1,21 +1,19 @@
 <template>
-    <div class="wrapper">
-        
-    </div>
+  <div class="wrapper" />
 </template>
 <script>
 export default {
-    data(){
-        return {
-            
-        }
-    },
-    
-    methods:{
+  data() {
+    return {
 
     }
+  },
+
+  methods: {
+
+  }
 }
 </script>
 <style lang="scss">
-    
+
 </style>

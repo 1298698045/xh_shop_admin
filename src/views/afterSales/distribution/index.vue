@@ -1,17 +1,15 @@
 <template>
-    <div class="wrapper">
-        
-    </div>
+  <div class="wrapper" />
 </template>
 <script>
 export default {
-    data(){
-        return {
+  data() {
+    return {
 
-        }
     }
+  }
 }
 </script>
 <style lang="scss" scoped>
-    
+
 </style>
