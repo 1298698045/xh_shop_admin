@@ -215,6 +215,13 @@ export const constantRoutes = [
         meta: { title: '配送列表' }
       },
       {
+        path: 'distributionDetail',
+        name: 'DistributionDetail',
+        hidden: true,
+        component: () => import('@/views/afterSales/distribution/detail.vue'),
+        meta: { title: '运单详情' }
+      },
+      {
         path: 'refundList',
         name: 'RefundList',
         component: () => import('@/views/afterSales/refundList'),

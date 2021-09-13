@@ -200,7 +200,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-button type="primary">
+        <el-button type="primary" size="mini">
           添加商品
         </el-button>
       </el-card>
@@ -266,7 +266,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-*{
+    p{
         margin: 0;
         padding: 0;
     }
