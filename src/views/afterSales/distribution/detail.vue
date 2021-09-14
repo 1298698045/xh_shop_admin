@@ -51,13 +51,14 @@
               配送日期：
             </p>
             <p class="val">
-              <span v-if="!isShow">2021/9/5 17:35:00</span>
+              <span v-if="!isShow">{{ time }}</span>
               <el-date-picker
                 v-if="isShow"
                 v-model="time"
                 type="datetime"
                 size="mini"
                 placeholder="选择日期时间"
+                @change="changeTime"
               />
               <el-button v-if="!isShow" size="mini" @click.native="getEditTime">
                 编辑
@@ -113,7 +114,7 @@
           >
             <template slot-scope="scope">
               <p class="name">
-                {{ scope.row.prductName.prductSku }}
+                {{ scope.row.prductSku }}
               </p>
             </template>
           </el-table-column>
@@ -149,7 +150,7 @@ export default {
   data() {
     return {
       phone: '',
-      time: '',
+      time: '2021/9/5 17:35:00',
       isShow: false,
       tableData: [
         {
@@ -168,6 +169,13 @@ export default {
       this.isShow = true
     },
     getCabcel() {
+      this.isShow = false
+    },
+    changeTime(e) {
+      var time = this.$moment(e).format('YYYY-MM-DD HH:mm:ss')
+      this.time = time
+    },
+    getSaveTime() {
       this.isShow = false
     }
   }

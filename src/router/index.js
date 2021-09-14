@@ -176,12 +176,35 @@ export const constantRoutes = [
         }
       },
       {
+        path: 'addShop',
+        name: 'AddShop',
+        hidden: true,
+        component: () => import('@/views/shop/shop/addProduct.vue'),
+        meta: {
+          title: '添加商品',
+          icon: '',
+          noCache: true,
+          activeMenu: '/shop/shop'
+        }
+      },
+      {
         path: 'shopClass',
         name: 'ShopClass',
         component: () => import('@/views/shop/shopClass'),
         meta: {
           title: '商品分类',
           icon: ''
+        }
+      },
+      {
+        path: 'editClass',
+        name: 'EditClass',
+        hidden: true,
+        component: () => import('@/views/shop/shopClass/editClass'),
+        meta: {
+          title: '编辑分类',
+          icon: '',
+          activeMenu: '/shop/shopClass'
         }
       }
     ]

@@ -15,6 +15,15 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // 权限控制
 
+import moment from 'moment' // 时间格式化
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+
+import 'quill/dist/quill.snow.css'
+
+import 'quill/dist/quill.bubble.css'
+Vue.use(VueQuillEditor)
+Vue.prototype.$moment = moment
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
