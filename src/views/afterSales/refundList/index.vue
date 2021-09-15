@@ -156,11 +156,76 @@
         <el-button type="primary" @click="getEditSubmit('editForm')">确 定</el-button>
       </span>
     </el-dialog>
+    <MyPopup
+      :dialog-title="dialogTitle"
+      :visible.sync="dialogVisible"
+      :popup-width="'550px'"
+      @updateVisible="updateVisible"
+      @resetPopupData="resetPopupData"
+      @submitPopupData="submitPopupData('editForm')"
+      @handleClose="handleClose"
+    >
+      <div class="modalContent">
+        <el-form ref="editForm" class="editForm" :rules="editFormRules" :model="editForm" label-width="100px">
+          <div class="infoRow">
+            <span class="label">商品ID</span>
+            <span class="val">4730720210910085709</span>
+          </div>
+          <div class="infoRow">
+            <span class="label">订单ID</span>
+            <span class="val">868411720210910085645</span>
+          </div>
+          <div class="infoRow">
+            <span class="label">客户</span>
+            <span class="val">匿名用户</span>
+          </div>
+          <div class="infoRow">
+            <span class="label">商品</span>
+            <span class="val">百年LOGO单枚装（锌合金平头扣）</span>
+          </div>
+          <el-form-item class="infoRow" prop="number" label="数量">
+            <el-input v-model="editForm.number" type="number" size="mini" clearable placeholder="请输入内容" />
+          </el-form-item>
+          <el-form-item class="infoRow" prop="refundStatus" label="退货请求状态">
+            <el-select v-model="editForm.refundStatus" clear="inp" size="mini" placeholder="请选择付款状态">
+              <el-option label="全部" value="shanghai" />
+              <el-option label="等待" value="beijing" />
+              <el-option label="已收到" value="beijing" />
+              <el-option label="退货授权" value="beijing" />
+              <el-option label="货物已更换" value="beijing" />
+              <el-option label="货物已退款" value="beijing" />
+              <el-option label="拒绝请求" value="beijing" />
+              <el-option label="已取消" value="beijing" />
+            </el-select>
+          </el-form-item>
+          <el-form-item class="infoRow" prop="reason" label="退货原因">
+            <el-input v-model="editForm.reason" type="text" size="mini" clearable placeholder="请输入内容" />
+          </el-form-item>
+          <el-form-item class="infoRow" prop="operation" label="退货操作">
+            <el-input v-model="editForm.operation" type="text" size="mini" clearable placeholder="请输入内容" />
+          </el-form-item>
+          <el-form-item class="infoRow explain" prop="explain" label="退货说明">
+            <el-input v-model="editForm.explain" type="textarea" size="mini" clearable placeholder="请输入内容" />
+          </el-form-item>
+          <el-form-item class="infoRow" prop="workingExplain" label="工作人员说明">
+            <el-input v-model="editForm.workingExplain" type="textarea" size="mini" clearable placeholder="请输入内容" />
+          </el-form-item>
+          <div class="infoRow">
+            <span class="label">日期</span>
+            <span class="val">2021/9/10 16:57:09</span>
+          </div>
+        </el-form>
+      </div>
+    </MyPopup>
   </div>
 </template>
 <script>
 import { resizeMixin } from '@/mixins/resize.js'
+import MyPopup from '@/components/customUi/myPopup.vue'
 export default {
+  components: {
+    MyPopup
+  },
   mixins: [resizeMixin],
   data() {
     return {
@@ -245,7 +310,9 @@ export default {
         operation: [
           { required: true, message: '请输入退货操作', trigger: 'blur' }
         ]
-      }
+      },
+      dialogVisible: false,
+      dialogTitle: '编辑退货'
     }
   },
   methods: {
@@ -253,14 +320,16 @@ export default {
       return ['等待', '已收到', '同意', '拒绝'][status]
     },
     handleEdit() {
-      this.editDialog = true
+      // this.editDialog = true
+      this.dialogVisible = true
       // this.$router.push({
       //     name:'EditRefundList'
       // })
     },
     handleClose(formName = 'editForm') {
-      this.$refs.editForm.resetFields()
-      this.editDialog = false
+      // this.$refs.editForm.resetFields()
+      // this.editDialog = false
+      this.dialogVisible = false
     },
     getEditSubmit(formName) {
       this.$refs[formName].validate((validate) => {
@@ -269,6 +338,22 @@ export default {
           this.editDialog = false
         }
       })
+    },
+    updateVisible(val) {
+      console.log(val)
+    },
+    submitPopupData(formName) {
+      this.$refs[formName].validate((validate) => {
+        console.log(validate)
+        if (validate) {
+          this.dialogVisible = false
+          this.$refs.editForm.resetFields()
+        }
+      })
+    },
+    resetPopupData() {
+      this.dialogVisible = false
+      this.$refs.editForm.resetFields()
     }
   }
 }
@@ -299,6 +384,8 @@ export default {
     .modalContent{
         height: 500px;
         overflow-y: auto;
+        padding: 0 32px;
+        box-sizing: border-box;
     }
     .modalContent .editForm .infoRow .label{
         display: inline-block;

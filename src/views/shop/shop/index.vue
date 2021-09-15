@@ -2,10 +2,16 @@
   <div class="wrapper">
     <div class="header">
       <div class="nav">
-        <p class="label">商品</p>
+        <p class="label">
+          商品
+        </p>
         <div class="btns">
-          <el-button size="mini" type="primary" @click.native="handleAddProduct">添加</el-button>
-          <el-button size="mini" type="danger">删除所选</el-button>
+          <el-button size="mini" type="primary" @click.native="handleAddProduct">
+            添加
+          </el-button>
+          <el-button size="mini" type="danger">
+            删除所选
+          </el-button>
         </div>
       </div>
       <el-card class="box-card">
@@ -221,7 +227,8 @@ export default {
           isSet: false
         }
       ],
-      height: ''
+      height: '',
+      currentPage: 1
     }
   },
   watch: {
@@ -242,6 +249,12 @@ export default {
       this.$router.push({
         name: 'AddShop'
       })
+    },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`)
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`)
     }
   }
 }

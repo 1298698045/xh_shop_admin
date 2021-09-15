@@ -197,7 +197,7 @@ export const constantRoutes = [
         }
       },
       {
-        path: 'editClass',
+        path: 'editClass/:type',
         name: 'EditClass',
         hidden: true,
         component: () => import('@/views/shop/shopClass/editClass'),
@@ -205,7 +205,56 @@ export const constantRoutes = [
           title: '编辑分类',
           icon: '',
           activeMenu: '/shop/shopClass'
+        },
+        beforeEnter: (to, from, next) => {
+          console.log(to)
+          if (to.params.type === 'add') {
+            to.meta.title = '添加分类'
+            document.title = '添加分类'
+          } else {
+            to.meta.title = '编辑分类'
+            document.title = '编辑分类'
+          }
+          next()
         }
+      },
+      {
+        path: 'attributeAdmin',
+        name: 'AttributeAdmin',
+        component: () => import('@/views/shop/attributeAdmin'),
+        meta: {
+          title: '属性管理',
+          icon: ''
+        },
+        children: [
+          {
+            path: 'attribute',
+            name: 'Attribute',
+            component: () => import('@/views/shop/attributeAdmin/attribute'),
+            meta: {
+              title: '商品属性',
+              icon: ''
+            }
+          },
+          {
+            path: 'specs',
+            name: 'Specs',
+            component: () => import('@/views/shop/attributeAdmin/attributeSpecs'),
+            meta: {
+              title: '规格',
+              icon: ''
+            }
+          },
+          {
+            path: 'checkout',
+            name: 'Checkout',
+            component: () => import('@/views/shop/attributeAdmin/checkout'),
+            meta: {
+              title: '结账属性',
+              icon: ''
+            }
+          }
+        ]
       }
     ]
   },
@@ -276,7 +325,22 @@ export const constantRoutes = [
       meta: { title: '详情', noCache: true, activeMenu: '/orderList/orderList', breadcrumb: true }
     }]
   },
-
+  {
+    path: '/jurisdiction',
+    component: Layout,
+    redirect: '/jurisdiction',
+    children: [
+      {
+        path: '/jurisdiction',
+        name: 'Jurisdiction',
+        component: () => import('@/views/jurisdiction'),
+        meta: {
+          title: '权限管理',
+          icon: 'el-icon-user-solid'
+        }
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
@@ -294,6 +358,7 @@ export const asyncRouterMap = [
     redirect: '/example/table',
     name: 'Example',
     meta: { title: 'Example', icon: 'el-icon-s-help' },
+    roles: ['admin', 'editor'],
     children: [
       {
         path: 'table',

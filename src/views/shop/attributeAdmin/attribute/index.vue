@@ -3,7 +3,7 @@
     <div class="header">
       <div class="nav">
         <p class="label">
-          商品分类
+          商品属性
         </p>
         <div class="btns">
           <el-button size="mini" type="primary" @click.native="handleAddProduct">
@@ -14,29 +14,11 @@
           </el-button>
         </div>
       </div>
-      <el-card class="box-card">
-        <div class="searchForm">
-          <el-form ref="formSeach" class="formSeach" :model="formSeach" label-width="80px">
-            <el-form-item class="formItem" prop="shopName" label="分类名称">
-              <el-input v-model="formSeach.shopName" class="inp" size="mini" clearable />
-            </el-form-item>
-            <el-form-item class="formItem" prop="orderStatus" label="已发布">
-              <el-select v-model="formSeach.orderStatus" clear="inp" size="mini" placeholder="请选择付款状态">
-                <el-option label="全部" value="shanghai" />
-                <el-option label="简单" value="beijing" />
-                <el-option label="分组的商品" value="123" />
-              </el-select>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" size="mini" @click.native="handleQuery('formSeach')">
-                查询
-              </el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-      </el-card>
     </div>
     <div class="center">
+      <p class="title">
+        商品属性是最小存货单位，是商品的销售属性集合。
+      </p>
       <el-table
         :data="tableData"
         border
@@ -49,8 +31,7 @@
         />
         <el-table-column
           prop="name"
-          label="商品名称"
-          width="500"
+          label="名称"
         >
           <template slot-scope="scope">
             <p class="name">
@@ -58,20 +39,6 @@
             </p>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="release"
-          label="已发布"
-        >
-          <template slot-scope="scope">
-            <div style="font-size:30px">
-              {{ scope.row.release?'√':'×' }}
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="sort"
-          label="地址属性显示顺序"
-        />
         <el-table-column
           fixed="right"
           label="操作"
@@ -150,11 +117,16 @@ export default {
       },
       tableData: [
         {
-          name: '协和邮品',
-          release: false,
-          sku: '',
-          isSet: false,
-          sort: 1
+          name: '大小',
+          isSet: false
+        },
+        {
+          name: '尺码',
+          isSet: false
+        },
+        {
+          name: '颜色',
+          isSet: false
         }
       ],
       height: '',
@@ -177,18 +149,7 @@ export default {
     },
     handleAddProduct() {
       this.$router.push({
-        name: 'EditClass',
-        params: {
-          type: 'add'
-        }
-      })
-    },
-    handleEdit() {
-      this.$router.push({
-        name: 'EditClass',
-        params: {
-          type: 'edit'
-        }
+        name: 'AddShop'
       })
     },
     handleSizeChange(val) {
@@ -201,38 +162,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.el-form-item{
-        margin: 0;
-    }
-    .el-scrollbar .el-scrollbar__view .el-select-dropdown__item{
-        height: auto;
-        max-height: 274px;
-        padding: 0;
-        overflow: hidden;
-        overflow-y: auto;
-        padding-left: 10px;
-      }
-      .classOptions{
-        padding-left: 0!important;
-      }
-  .shopClass .el-select-dropdown__item.selected{
-    font-weight: normal;
-  }
-  >>>.el-tree .el-tree-node__content{
-    height:auto;
-    padding: 0 !important;
-  }
-  .el-tree-node__label{
-    font-weight: normal;
-  }
-  .el-tree >>>.is-current .el-tree-node__label{
-    color: #409EFF;
-    font-weight: 700;
-  }
-  .el-tree >>>.is-current .el-tree-node__children .el-tree-node__label{
-    color:#606266;
-    font-weight: normal;
-  }
     .wrapper {
         .header{
             padding: 20px;
