@@ -250,6 +250,14 @@ export default {
         name: 'AddShop'
       })
     },
+    handleEdit() {
+      this.$router.push({
+        name: 'AddShop',
+        query: {
+          type: 'edit'
+        }
+      })
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`)
     },

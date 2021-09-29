@@ -100,7 +100,7 @@
       class="modal"
       :before-close="handleClose"
     >
-      <div class="modalContent">
+      <div class="modalContent scrollbar">
         <el-form ref="editForm" class="editForm" :rules="editFormRules" :model="editForm" label-width="100px">
           <div class="infoRow">
             <span class="label">商品ID</span>

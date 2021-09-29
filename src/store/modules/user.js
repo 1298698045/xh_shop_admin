@@ -1,6 +1,6 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import router, { resetRouter } from '@/router'
+import router, { resetRouter, asyncRouterMap } from '@/router'
 
 const getDefaultState = () => {
   return {
@@ -62,6 +62,15 @@ const actions = {
         console.log(name, '')
         commit('SET_NAME', '6789')
         commit('SET_AVATAR', avatar)
+        asyncRouterMap.forEach(item => {
+          const isBook = item.meta.roles.includes(name)
+          console.log(isBook)
+          if (isBook) {
+            router.addRoutes(asyncRouterMap)
+            router.options.routes = router.options.routes.concat(asyncRouterMap)
+            console.log(router, '---------')
+          }
+        })
         resolve(data)
       }).catch(error => {
         reject(error)

@@ -1,4 +1,4 @@
-import { asyncRoutes, constantRoutes } from '@/router'
+import router, { asyncRoutes, constantRoutes } from '@/router'
 
 /**
  * 使用meta.role确定当前用户是否具有权限

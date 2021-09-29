@@ -6,7 +6,8 @@ import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
 
-console.log(asyncRouterMap)
+console.log('asyncRouterMap:', asyncRouterMap)
+console.log('router:', router)
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login'] // no redirect whitelist
@@ -34,6 +35,10 @@ router.beforeEach(async(to, from, next) => {
         try {
           // get user info
           await store.dispatch('user/getInfo')
+          // console.log('asyncRouterMap===', asyncRouterMap, router)
+          // router.addRoutes(asyncRouterMap)
+          // router.options.routes = router.options.routes.concat(asyncRouterMap)
+          console.log('router===', router)
           next()
         } catch (error) {
           // remove token and go to login page to re-login

@@ -357,8 +357,11 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
-    roles: ['admin', 'editor'],
+    meta: {
+      title: 'Example',
+      icon: 'el-icon-s-help',
+      roles: ['admin', 'editor']
+    },
     children: [
       {
         path: 'table',
@@ -373,11 +376,6 @@ export const asyncRouterMap = [
         meta: { title: 'Tree', icon: 'tree' }
       }
     ]
-  },
-  {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
   }
 ]
 

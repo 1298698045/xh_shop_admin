@@ -4,7 +4,7 @@
       <div class="nav">
         <div class="left">
           <p class="name">
-            添加新的商品
+            {{ routeName }}
           </p>
           <p class="back" @click="getNavBack">
             <i class="el-icon-arrow-left" />
@@ -134,6 +134,7 @@
 export default {
   data() {
     return {
+      routeName: '添加新的商品',
       form: {
         productName: '',
         desc: '',
@@ -196,6 +197,15 @@ export default {
     getNavBack() {
       this.$router.go(-1)
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log(from, to)
+    next((vm) => {
+      if (to.query.type === 'edit') {
+        // console.log(vm)
+        vm.routeName = '编辑商品'
+      }
+    })
   }
 }
 </script>
