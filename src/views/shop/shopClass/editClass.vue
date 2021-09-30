@@ -15,7 +15,7 @@
           <el-button size="mini" type="primary">
             保存
           </el-button>
-          <el-button size="mini" type="primary">
+          <el-button size="mini" type="primary" @click="handleSave">
             保存并继续编辑
           </el-button>
         </div>
@@ -76,6 +76,7 @@
   </div>
 </template>
 <script>
+import handleDt from '@/utils/deth'
 export default {
   data() {
     return {
@@ -147,7 +148,10 @@ export default {
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`)
-    }
+    },
+    handleSave: handleDt.throttle(() => {
+      console.log('节流')
+    }, 2000)
   }
 }
 </script>
